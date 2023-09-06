@@ -1,0 +1,23 @@
+#---
+## 배포 환경에서는 환경 변수에서 값을 가져오도록합니다.
+#spring:
+#  config:
+#    activate:
+#      on-profile: deployment
+#server:
+#  port: ${SERVER_PORT}
+#jwt:
+#  header: Authorization
+#  secret: ${JWT_SECRET}  # ci 프로젝트 .env 파일 참조
+#  token-validity-in-seconds: 86400
+#---
+## 운영 환경의 경우에만 오류 화면이나 스택트레이스가 사용자에게 보여지지 않도록 합니다.
+#spring:
+#  config:
+#    activate:
+#      on-profile: production
+#server:
+#  error:
+#    include-stacktrace: never
+#    whitelabel:
+#      enabled: false

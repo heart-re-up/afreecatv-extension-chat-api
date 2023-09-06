@@ -1,0 +1,110 @@
+spring:
+  application:
+    name: tinteccnc-unified-messaging-system
+  datasource:
+    url: jdbc:h2:mem:bitcon
+    username: sa
+    password: 1234
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+      javax:
+        persistence:
+          sharedcache:
+            mode: ENABLE_SELECTIVE
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+logging:
+  level:
+    org.springframework.web.client: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: trace
+jwt:
+  token:
+    issuer: bitcon
+    secret: 244226452948404D6351655468576D5A7134743777217A25432A462D4A614E64
+    token-validity-to-access: 1h # 1시간
+    token-validity-to-refresh: 14d # 2주
+    token-validity-timezone: UTC
+    header-name: Authorization
+  api-key:
+    issuer: bitcon
+    secret: 244226452948404D6351655468576D5A7134743777217A25432A462D4A614E64
+    token-validity-to-access: 730d # 약 2년
+    token-validity-to-refresh: 14d # 2주
+    token-validity-timezone: UTC
+    header-name: Authorization
+message-service:
+  xms-sender-number: 0269595701
+  channels:
+    sms:
+      charset-name: EUC-KR
+      byte-limit: 90
+    lms:
+      charset-name: EUC-KR
+      byte-limit: 2000
+    mms:
+      charset-name: EUC-KR
+      byte-limit: 2000
+    isms:
+      charset-name: UTF-8
+      byte-limit: 90
+    kakao:
+      charset-name: UTF-8
+      byte-limit: 1000
+sejong:
+  wide-shot:
+    base-url: https://apimsg-dev.wideshot.co.kr/api/v1/
+    api-key: MXBlamlseGNpREx5SHJYUWdialQ0a0tDNFdSV2s2bXRNVUJDOCtrV3hWcVk4c0pRZ1FXMHgyUUlPRGVnd3VUcg==
+    kakao-channel-name: '@티엔박스'
+    kakao-profile-key: 9a26f95d7c07b9bdebc175ea1ac6b682aec71a49
+    cost:
+      kakao-noti: 7
+      kakao-friend-text: 13
+      kakao-friend-image: 20
+      kakao-friend-wide: 22
+      sms: 9
+      lms: 26
+      mms: 60
+      isms: 0
+    sms:
+      rateLimitInSecond: 50
+    lms:
+      rateLimitInSecond: 40
+    mms:
+      rateLimitInSecond: 3
+    isms:
+      rateLimitInSecond: 50
+---
+# 배포 환경에서는 환경 변수에서 값을 가져오도록합니다.
+spring:
+  config:
+    activate:
+      on-profile: deployment
+server:
+  port: ${SERVER_PORT}
+jwt:
+  header: Authorization
+  secret: ${JWT_SECRET}  # ci 프로젝트 .env 파일 참조
+  token-validity-in-seconds: 86400
+---
+# 운영 환경의 경우에만 오류 화면이나 스택트레이스가 사용자에게 보여지지 않도록 합니다.
+spring:
+  config:
+    activate:
+      on-profile: production
+server:
+  error:
+    include-stacktrace: never
+    whitelabel:
+      enabled: false

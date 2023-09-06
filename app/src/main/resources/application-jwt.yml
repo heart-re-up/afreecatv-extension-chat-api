@@ -1,0 +1,9 @@
+#spring:
+#  config:
+#    activate:
+#      on-profile: deployment
+#jwt:
+#  header: Authorization
+#  secret: ${JWT_SECRET}  # ci 프로젝트 .env 파일 참조
+#  token-validity-in-seconds: 86400
+#api-key:
